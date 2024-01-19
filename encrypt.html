@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <form id="encrypt">
+      <label for="file">File to encrypt:</label>
+      <input type="file" id="file" required />
+      <br />
+      <label for="password">Encryption password:</label>
+      <input type="password" id="password" minlength="1" />
+      <br />
+      <label for="iterations">Hash iterations:</label>
+      <input type="number" id="iterations" value="10000" min="1" max="4294967296" />
+      <br />
+      <input type="submit" value="Encrypt" />
+      <input type="reset" value="Clear" />
+    </form>
+
+    <div id="results" style="display: none">
+      <a id="bytes">Encrypted file</a>
+      <pre><code id="params"></code></pre>
+    </div>
+
+    <div id="error" style="display: none"></div>
+
+    <script type="module">
+      import { encrypt } from "./static-secret.js";
+
+      document.forms.encrypt.onreset = () => {
+        const resultsElt = document.querySelector("#results");
+        const errorElt = document.querySelector("#error");
+
+        resultsElt.style.display = "none";
+        errorElt.style.display = "none";
+
+        const bytesElt = resultsElt.querySelector("#bytes");
+        if (bytesElt.href) URL.revokeObjectURL(bytesElt.href);
+        bytesElt.href = "";
+      };
+
+      document.forms.encrypt.onsubmit = async (event) => {
+        event.preventDefault();
+
+        const form = event.target;
+
+        const resultsElt = document.querySelector("#results");
+        const errorElt = document.querySelector("#error");
+
+        const dataFile = form.elements.file.files[0];
+        const password = form.elements.password.value;
+        const iterations = Number(form.elements.iterations.value);
+
+        resultsElt.style.display = "none";
+        errorElt.style.display = "none";
+
+        try {
+          const { bytes, params } = await encrypt(dataFile, password, {
+            iterations,
+          });
+
+          const bytesElt = resultsElt.querySelector("#bytes");
+          if (bytesElt.href) URL.revokeObjectURL(bytesElt.href);
+
+          const encryptedFile = new File([bytes], dataFile.name + ".encrypted", {
+            type: "application/octet-stream",
+          });
+
+          bytesElt.href = URL.createObjectURL(encryptedFile);
+
+          const paramsElt = resultsElt.querySelector("#params");
+          paramsElt.innerText = `data-static-secret="${params}"`;
+
+          resultsElt.style.display = "unset";
+        } catch (error) {
+          console.error(error);
+          errorElt.innerText = String(error);
+          errorElt.style.display = "unset";
+        }
+      };
+    </script>
+  </body>
+</html>
