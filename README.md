@@ -1,6 +1,6 @@
 # static-secret.js
 
-`static-secret` is a simple-to-use script for embedding password-encrypted data into web pages.
+`static-secret` is a simple-to-use script for embedding _secret_ password-encrypted data into _static_ web pages.
 
 ## Usage
 
