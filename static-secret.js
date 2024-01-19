@@ -5,11 +5,16 @@ if (import.meta.url) {
   if (importHashQuery.has("decrypt")) {
     const hashQuery = new URLSearchParams(window.location.hash.slice(1));
 
+    const passwordParameter = importHashQuery.get("pwin") ?? "p";
+    const password = hashQuery.get(passwordParameter);
+    hashQuery.delete(passwordParameter);
+
+    const clearedUrl = new URL(window.location);
+    clearedUrl.hash = hashQuery.toString();
+    history.replaceState(null, "", clearedUrl);
+
     window.addEventListener("load", () => {
-      decryptElements({
-        root: document,
-        password: hashQuery.get(importHashQuery.get("pwin") ?? "p"),
-      });
+      decryptElements({ root: document, password });
     });
   }
 }
