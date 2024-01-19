@@ -10,16 +10,25 @@ There's a [browser tool].
 
 [browser tool]: https://iliazeus.github.io/static-secret/encrypt.html
 
+Save both the encrypted file and the `data-static-secret` value.
+
 ### Embedding with auto-decryption
 
-First, reference the script by adding this to your page's HTML:
+First, add the script to your web page. You can either reference the GitHub-hosted version:
 
 <!-- prettier-ignore -->
 ```html
 <script type="module" src="https://iliazeus.github.io/static-secret/static-secret.js#decrypt"></script>
 ```
 
-Save both the encrypted file and the `data-static-secret` value;
+Or you can <a download href="https://iliazeus.github.io/static-secret/static-secret.js">download the script</a>, put it beside your page and reference your copy:
+
+<!-- prettier-ignore -->
+```html
+<script type="module" src="./static-secret.js#decrypt"></script>
+```
+
+Do not remove the `#decrypt` parameter - that's what enables the auto-decryption feature, so you don't have to write any JavaScript yourself.
 
 Then, embed the encrypted data:
 
