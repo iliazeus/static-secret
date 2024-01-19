@@ -15,6 +15,9 @@
       <label for="iterations">Hash iterations:</label>
       <input type="number" id="iterations" value="10000" min="1" max="4294967296" />
       <br />
+      <input type="checkbox" id="base64" />
+      <label for="base64">Get base64-encoded contents</label>
+      <br />
       <input type="submit" value="Encrypt" />
       <input type="reset" value="Clear" />
     </form>
@@ -52,6 +55,7 @@
         const dataFile = form.elements.file.files[0];
         const password = form.elements.password.value;
         const iterations = Number(form.elements.iterations.value);
+        const needsBase64 = form.elements.base64.checked;
 
         resultsElt.style.display = "none";
         errorElt.style.display = "none";
@@ -72,6 +76,11 @@
 
           const paramsElt = resultsElt.querySelector("#params");
           paramsElt.innerText = `data-static-secret="${params}"`;
+
+          if (needsBase64) {
+            const base64 = btoa(String.fromCharCode(...bytes));
+            paramsElt.innerHTML += `\nbase64 contents for embedding:\n` + base64;
+          }
 
           resultsElt.style.display = "unset";
         } catch (error) {
