@@ -8,20 +8,20 @@
 
 There's a [browser tool].
 
-[browser tool]: https://iliazeus.github.io/static-secret/encrypt.html
+[browser tool]: https://iliazeus.lol/static-secret/encrypt.html
 
 Save both the encrypted file and the `data-static-secret` value.
 
 ### Embedding with auto-decryption
 
-First, add the script to your web page. You can either reference the GitHub-hosted version:
+First, add the script to your web page. You can either reference the version hosted by me:
 
 <!-- prettier-ignore -->
 ```html
-<script type="module" src="https://iliazeus.github.io/static-secret/static-secret.js#decrypt"></script>
+<script type="module" src="https://iliazeus.lol/static-secret/static-secret.js#decrypt"></script>
 ```
 
-Or you can <a download href="https://iliazeus.github.io/static-secret/static-secret.js">download the script</a>, put it beside your page and reference your copy:
+Or you can <a download href="https://iliazeus.lol/static-secret/static-secret.js">download the script</a>, put it beside your page and reference your copy:
 
 <!-- prettier-ignore -->
 ```html
@@ -50,7 +50,7 @@ base64 encrypted contents here (check the "Get base64-encoded contents" box).
 
 To view encrypted files, you will need the same password that was used for encryption. By default, you pass it via the `#p=` parameter, as in this example:
 
-https://iliazeus.github.io/static-secret/example.html#p=kodak
+https://iliazeus.lol/static-secret/example.html#p=kodak
 
 ### Advanced
 
